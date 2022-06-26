@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  </head>
+  <body>
+
+    <ul id="messages" style="background: red;">
+      
+    </ul>
+
+   
+      
+ <input type="hidden" name='roomid' id="htmlroomid" value="<%= roomid %>" />
+<input type="hidden" name='username' id="htmlusername" value="<%= username %>">
+      <input id="input" type="text" name="inputvalue" autocomplete="off" />
+      <button id="sendbtn">Send</button>
+
+    <form action="/" method="post">
+      <input type="hidden" name="htmladmin" value="<%= admin %>">
+      <input type="hidden" name='roomid' id="htmlroomid" value="<%= roomid %>" />
+      <input type="submit" name="leaveRoom" value="LeaveRoom">
+    </form>
+
+<script type="text/javascript">
+
+
+setInterval(function(){
+
+  $.ajax({  
+           url:'/allmsgs',  
+           method:'post',  
+           dataType:'json',  
+           data:{'roomid':roomid},  
+           success:function(response){  
+                var allmsgs=response.allmsgs
+
+                iteratemsgs(allmsgs)
+           },  
+           error:function(){  
+               alert('server error occured')  
+           }  
+       }); 
+  
+      },1000);
+
+var roomid=$('#htmlroomid').val()
+var username=$('#htmlusername').val()
+ 
+
+
+console.log($('#htmlroomid').val());
+console.log($('#htmlusername').val());
+
+
+   $('#sendbtn').click(function(){  
+         var msg=$('#input').val()
+
+       $.ajax({  
+           url:'/room',  
+           method:'post',  
+           dataType:'json',  
+           data:{'roomid':roomid,'msg':msg,'username':username},  
+           success:function(response){  
+                
+           },  
+           error:function(){  
+               alert('server error occured')  
+           }  
+       });  
+    });  
+
+
+function iteratemsgs(allmsgs){
+  document.getElementById('messages').innerHTML=""
+  for(let i=0;i<allmsgs.length;i++){
+  var msgval=allmsgs[i]
+  var idx=msgval.indexOf("!")
+  var uname=msgval.substr(0,idx)
+  var msg=msgval.substr(idx+1,msgval.length-1)
+  var itemName= document.createElement('h1');
+
+  itemName.id="bigname";
+  itemName.textContent =uname;
+  document.getElementById('messages').appendChild(itemName);
+
+
+  var itemMsg = document.createElement('li');
+  itemMsg.id="actualmsg";
+  itemMsg.textContent =msg ;
+  document.getElementById('messages').appendChild(itemMsg);
+
+}
+    
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+  
+
+//   form.addEventListener('submit', function(e) {
+//     e.preventDefault();
+//     if (input.value) {
+//       input.value = '';
+//     }
+
+
+//   });
+
+
+
+</script>
+  </body>
+</html>

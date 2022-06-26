@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+      function createfun() {
+        document.getElementById("mainarea").innerHTML=`
+        <form action="/createroom" method="post">
+        <label><i class="fas fa-user">Username</i></label>
+        <input type="text" name="username"/>
+        <label><i class="fas fa-key">Password</i></label>
+        <input type="text" name="pass"/>
+        <br>
+        <input type="submit"/>
+        </form>
+        `
+      }
+      function joinfun() {
+        document.getElementById("mainarea").innerHTML=`
+        <form action="/joinroom" method="post">
+        <label><i class="fas fa-door-open">Room Id</i></label>
+        <input type="text" name="roomid"/>
+        <label><i class="fas fa-user">Username</i></label>
+        <input type="text" name="username"/>
+        <label><i class="fas fa-key">Room Password</i></label>
+        <input type="text" name="pass"/>
+        <br>
+        <input type="submit"/>
+        </form>
+        `
+      }
+      
+    </script>
+  </head>
+  <body>
+    <div class="overlay join-create-room">
+  <div class="overlay-content rounded">
+    <div class="header">
+      <h2>Create or Join room</h2>
+    </div>
+    <div class="row">
+      <div class="col center join-room">
+        
+          <button class="btn btn-primary" onclick="createfun()">
+            <i class="fas fa-door-open"></i> Create room
+
+          </button>
+          
+          <button class="btn btn-primary" onclick="joinfun()">
+            <svg class="icon" viewbox="0 0 3 2">
+              <rect x="0" y="0" width="1" height="2" fill="#0055A4" />
+              <rect x="1" y="0" width="1" height="2" fill="white" />
+              <rect x="2" y="0" width="1" height="2" fill="#EF4531" />
+            </svg>
+            Join Room
+          </button>
+        
+      </div>
+      <div class="col center create-room" id="mainarea">
+        
+    </div>
+  </div>
+</div>
+  </body>
+  </html>
