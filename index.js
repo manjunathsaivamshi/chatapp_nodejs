@@ -172,6 +172,10 @@ else{
 app.post('/allmsgs',async(req,res)=>{
 	var roomid_out=String(req.body.roomid);
 	var obj=await room.findById(roomid_out)
+	if(obj==null){
+		res.send('Host left');
+	}
+	else{
 	var allmsgs=obj.messages
 
 	if(allmsgs!=null){
@@ -180,8 +184,12 @@ app.post('/allmsgs',async(req,res)=>{
 	else{
 		res.send('error')
 	}
+}
 })
 
+app.get('/left',(req,res)=>{
+	res.send('host left');
+})
 
 
 app.post('/room',async (req,res)=>{

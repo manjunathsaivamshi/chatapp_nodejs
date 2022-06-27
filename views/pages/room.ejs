@@ -5,10 +5,44 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<style type="text/css">
+  #input{
+        background-color: lightgreen;
+    border: solid;
+    border-radius: 15px;
+    position: absolute;
+    left: 0px;
+    top: 93%;
+    width: 60%;
+  }
+  .msgarea{
+        position: absolute;
+    background: bisque;
+    height: 99%;
+    width: 75%;
+    overflow: scroll;
+    border: solid;
+    top: 0%;
+    left: 0%;
+  }
+  #sendbtn{
+        position: absolute;
+    left: 63%;
+    top: 93%;
+    width: 140px;
+  }
+  #actualmsg{
+    background: lightpink;
+    width: fit-content;
+    border: hidden;
+    border-radius: 5px;
+    padding: 5px;
+  }
+</style>
   </head>
   <body>
-
-    <ul id="messages" style="background: red;">
+<div class="msgarea">
+    <ul id="messages">
       
     </ul>
 
@@ -18,8 +52,11 @@
 <input type="hidden" name='username' id="htmlusername" value="<%= username %>">
       <input id="input" type="text" name="inputvalue" autocomplete="off" />
       <button id="sendbtn">Send</button>
+    </div>
 
-    <form action="/" method="post">
+    <form action="/" method="post" style="    position: absolute;
+    left: 80%;
+    top: 50%;">
       <input type="hidden" name="htmladmin" value="<%= admin %>">
       <input type="hidden" name='roomid' id="htmlroomid" value="<%= roomid %>" />
       <input type="submit" name="leaveRoom" value="LeaveRoom">
@@ -40,8 +77,8 @@ setInterval(function(){
 
                 iteratemsgs(allmsgs)
            },  
-           error:function(){  
-               alert('server error occured')  
+           error:function(response){  
+              window.location.replace("http://localhost:3000/left")  
            }  
        }); 
   
